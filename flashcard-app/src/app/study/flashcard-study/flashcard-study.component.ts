@@ -28,10 +28,17 @@ export class FlashcardStudyComponent implements OnInit {
 
   ngOnInit(): void {
     this.setId = this.route.snapshot.paramMap.get('id') ?? '';
+    console.log('Navigated to Study Set with ID:', this.setId);
+
     this.flashcardService.flashcardSets$.subscribe((sets: FlashcardSet[]) => {
+      console.log('Flashcard sets available:', sets);
+
       const set = sets.find((s) => s.id === this.setId);
       if (set) {
-        this.cards = set.cards;
+        this.cards = set.cards ?? [];
+        console.log('Loaded cards:', this.cards);
+      } else {
+        console.warn('Flashcard set not found with ID:', this.setId);
       }
     });
   }

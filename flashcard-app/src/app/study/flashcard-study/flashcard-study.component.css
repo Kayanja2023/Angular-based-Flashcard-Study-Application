@@ -3,8 +3,59 @@
   margin: 2rem auto;
   padding: 1rem;
   text-align: center;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-mat-card-content p {
-  font-size: 1.2rem;
+mat-card-title {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+}
+
+/* Flip Card Container */
+.flip-container {
+  perspective: 1000px;
+  width: 100%;
+  height: 200px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-container.flipped .flipper {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: var(--card-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/* Button Alignment */
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
