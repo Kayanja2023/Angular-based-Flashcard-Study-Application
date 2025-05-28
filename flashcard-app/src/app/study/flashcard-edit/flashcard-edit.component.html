@@ -1,0 +1,47 @@
+<div class="flashcard-edit-form">
+  <h2>Edit Flashcard Set</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter set name" />
+      <mat-error *ngIf="form.get('name')?.invalid">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Set description"></textarea>
+      <mat-error *ngIf="form.get('description')?.invalid">Description is required</mat-error>
+    </mat-form-field>
+
+    <div class="card-array" formArrayName="cards">
+      <div *ngFor="let card of cards.controls; let i = index" [formGroupName]="i" class="card-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Question</mat-label>
+          <input matInput formControlName="question" placeholder="Question*" />
+          <mat-error *ngIf="card.get('question')?.invalid">Question is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Answer</mat-label>
+          <input matInput formControlName="answer" placeholder="Answer*" />
+          <mat-error *ngIf="card.get('answer')?.invalid">Answer is required</mat-error>
+        </mat-form-field>
+
+        <button mat-icon-button type="button" (click)="removeCard(i)" aria-label="Remove card">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="button" (click)="addCard()">
+        <mat-icon>add</mat-icon> Add Card
+      </button>
+
+      <button mat-raised-button class="save-btn" color="primary" type="submit" [disabled]="form.invalid">
+        <mat-icon>save</mat-icon> Save
+      </button>
+    </div>
+  </form>
+</div>

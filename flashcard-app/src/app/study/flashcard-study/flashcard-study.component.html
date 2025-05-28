@@ -1,0 +1,20 @@
+<mat-card *ngIf="currentCard as card" class="study-card">
+  <mat-card-title>
+    Card {{ currentIndex + 1 }} / {{ cards.length }}
+  </mat-card-title>
+
+  <mat-card-content>
+    <p *ngIf="!showAnswer">{{ card.question }}</p>
+    <p *ngIf="showAnswer"><strong>{{ card.answer }}</strong></p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="flipCard()">
+      {{ showAnswer ? 'Hide Answer' : 'Show Answer' }}
+    </button>
+    <button mat-raised-button color="accent" (click)="nextCard()" [disabled]="currentIndex >= cards.length - 1">
+      Next
+    </button>
+    <button mat-stroked-button (click)="backToList()">Back to List</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,24 @@
+<div class="flashcard-list">
+  <h2>My Flashcard Sets</h2>
+
+  <button mat-raised-button color="primary" [routerLink]="['/edit', 'new']" class="save-btn">
+    <mat-icon>add</mat-icon>&nbsp;Create New Set
+  </button>
+
+  <mat-card *ngFor="let set of flashcardSets$ | async" class="flashcard-card">
+    <mat-card-title>{{ set.name }}</mat-card-title>
+    <mat-card-content>{{ set.description }}</mat-card-content>
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" [routerLink]="['/edit', set.id]">
+        <mat-icon>edit</mat-icon>&nbsp;Edit
+      </button>
+      <button mat-raised-button color="warn" (click)="confirmDelete(set.id)">
+        <mat-icon>delete</mat-icon>&nbsp;Delete
+      </button>
+
+      <button mat-flat-button color="accent" [routerLink]="['/study', set.id]">
+        <mat-icon>school</mat-icon>&nbsp;Study
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,38 @@
+/* Updated flashcard-list.component.css */
+.flashcard-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 32px;
+}
+
+.flashcard-list h2 {
+  grid-column: 1 / -1;
+  font-size: 28px;
+  margin-bottom: 16px;
+  color: var(--primary-color);
+}
+
+mat-card.flashcard-card {
+  background-color: var(--card-background) !important;
+  color: var(--text-color) !important;
+  transition: transform 0.2s ease-in-out;
+  border-radius: var(--border-radius);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+mat-card.flashcard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title, mat-card-content {
+  color: var(--text-color);
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

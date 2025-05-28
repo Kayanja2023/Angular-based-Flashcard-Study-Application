@@ -1,0 +1,43 @@
+/* Updated flashcard-edit.component.css */
+
+.flashcard-edit-form {
+  padding: 32px;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  margin: auto;
+}
+
+.flashcard-edit-form h2 {
+  font-size: 26px;
+  margin-bottom: 24px;
+  color: var(--primary-color);
+}
+
+.card-array {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.card-array .mat-form-field {
+  width: 100%;
+}
+
+.card-array input,
+.card-array textarea {
+  color: var(--text-color) !important;
+}
+
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.actions button {
+  min-width: 100px;
+}

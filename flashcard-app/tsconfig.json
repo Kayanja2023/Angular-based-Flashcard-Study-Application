@@ -1,0 +1,29 @@
+/* TypeScript and Angular Compiler Configuration */
+/* Learn more: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html */
+/* Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options */
+
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "ES2022",                       // Target modern JavaScript
+    "module": "ES2022",                       // Use ES module output
+    "moduleResolution": "bundler",            // For Angular standalone APIs (v17+)
+    "outDir": "./dist/out-tsc",
+    "strict": true,                           // Enable all strict type-checking options
+    "noImplicitOverride": true,               // Catch incorrect method overrides
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,                // Ensure functions return explicitly
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,                     // Skip checking .d.ts files
+    "isolatedModules": true,                  // Required for standalone components
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "experimentalDecorators": true            // Needed for Angular decorators
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,        // Ensures all DI is valid
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true                   // Enforce strict template type-checking
+  }
+}
