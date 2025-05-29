@@ -58,6 +58,14 @@ export class FlashcardStudyComponent implements OnInit {
     }
   }
 
+  previousCard(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.showAnswer = false;
+    }
+  }
+
+
   backToList(): void {
     this.router.navigate(['/list']);
   }

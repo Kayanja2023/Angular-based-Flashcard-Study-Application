@@ -1,4 +1,4 @@
-<ng-container *ngIf="cards.length > 0 && currentCard as card; else noCards">
+<ng-container *ngIf="cards.length > 0; else noCards">
   <mat-card class="study-card">
     <mat-card-title>
       Card {{ currentIndex + 1 }} / {{ cards.length }}
@@ -7,10 +7,10 @@
     <div class="flip-container" [class.flipped]="showAnswer">
       <div class="flipper">
         <div class="front">
-          <p>{{ card.question }}</p>
+          <p>{{ currentCard?.question }}</p>
         </div>
         <div class="back">
-          <p><strong>{{ card.answer }}</strong></p>
+          <p><strong>{{ currentCard?.answer }}</strong></p>
         </div>
       </div>
     </div>
@@ -19,10 +19,17 @@
       <button mat-raised-button color="primary" (click)="flipCard()">
         {{ showAnswer ? 'Hide Answer' : 'Show Answer' }}
       </button>
+
+      <button mat-raised-button color="accent" (click)="previousCard()" [disabled]="currentIndex === 0">
+        Previous
+      </button>
+
       <button mat-raised-button color="accent" (click)="nextCard()" [disabled]="currentIndex >= cards.length - 1">
         Next
       </button>
-      <button mat-stroked-button (click)="backToList()">Back to List</button>
+
+
+      <button mat-stroked-button color="warn" (click)="backToList()">Back to List</button>
     </mat-card-actions>
   </mat-card>
 </ng-container>
