@@ -1,34 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FlashcardService } from '../services/flashcard.service';
 import { FlashcardSet } from '../../models/flashcard-set.model';
 import { CommonModule } from '@angular/common';
 
+// Angular Material modules
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatError } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-flashcard-edit',
   standalone: true,
+  templateUrl: './flashcard-edit.component.html',
+  styleUrls: ['./flashcard-edit.component.css'],
   imports: [
     CommonModule,
-    RouterModule,
+    FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatTooltipModule
-  ],
-  templateUrl: './flashcard-edit.component.html',
-  styleUrls: ['./flashcard-edit.component.css']
+    MatDividerModule
+  ]
 })
 export class FlashcardEditComponent implements OnInit {
   form!: FormGroup;
@@ -46,9 +47,7 @@ export class FlashcardEditComponent implements OnInit {
     this.setId = this.route.snapshot.paramMap.get('id') ?? 'new';
     this.isEditing = this.setId !== 'new';
 
-    const currentSet = this.isEditing
-      ? this.flashcardService.getSetById(this.setId)
-      : null;
+    const currentSet = this.isEditing ? this.flashcardService.getSetById(this.setId) : null;
 
     this.form = this.fb.group({
       name: [currentSet?.name || '', Validators.required],
@@ -59,7 +58,7 @@ export class FlashcardEditComponent implements OnInit {
             question: [card.question, Validators.required],
             answer: [card.answer, Validators.required]
           })
-        ) || [this.createCard(), this.createCard()]
+        ) || [this.createCard()]
       )
     });
   }
@@ -87,12 +86,9 @@ export class FlashcardEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      const formValue = this.form.value;
       const updatedSet: FlashcardSet = {
         id: this.setId === 'new' ? Date.now().toString() : this.setId,
-        name: formValue.name,
-        description: formValue.description,
-        cards: formValue.cards
+        ...this.form.value
       };
 
       if (this.isEditing) {
@@ -101,11 +97,11 @@ export class FlashcardEditComponent implements OnInit {
         this.flashcardService.addSet(updatedSet);
       }
 
-      this.router.navigate(['/list']);
+      this.router.navigate(['/list']).catch(err => console.error('Navigation error:', err));
     }
   }
 
   backToList(): void {
-    this.router.navigate(['/list']);
+    this.router.navigate(['/list']).catch(err => console.error('Navigation error:', err));
   }
 }
