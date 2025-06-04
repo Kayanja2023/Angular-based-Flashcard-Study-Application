@@ -1,4 +1,3 @@
-
 # Flashcard Study App
 
 ## Project Overview
@@ -45,6 +44,25 @@ flashcard-app/
 
 ---
 
+## Repository Structure
+
+```
+.
+./README.md
+./flashcard-app
+./flashcard-app/README.md
+./flashcard-app/angular.json
+./flashcard-app/package-lock.json
+./flashcard-app/package.json
+./flashcard-app/public
+./flashcard-app/src
+./flashcard-app/tsconfig.app.json
+./flashcard-app/tsconfig.json
+./flashcard-app/tsconfig.spec.json
+```
+
+---
+
 ## Setup Instructions
 
 ### 1. Clone Repository
@@ -75,6 +93,3 @@ Navigate to `http://localhost:4200/` in your browser.
 To be added in future releases.
 
 ---
-
-
-

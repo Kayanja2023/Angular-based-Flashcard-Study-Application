@@ -1,11 +1,27 @@
+// Essential Angular imports for component functionality
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+// Form-related imports for handling reactive forms
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule
+} from '@angular/forms';
+
+// Routing-related imports for navigation and route parameters
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
+// Service and model imports
 import { FlashcardService } from '../services/flashcard.service';
 import { FlashcardSet } from '../../models/flashcard-set.model';
+
+// Common Angular functionality import
 import { CommonModule } from '@angular/common';
 
-// Angular Material modules
+// Angular Material UI component imports
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,9 +47,15 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDividerModule
   ]
 })
+
+
 export class FlashcardEditComponent implements OnInit {
+
+  // Form declaration - will hold the entire flashcard set form structure
   form!: FormGroup;
+  // Stores the ID of the current flashcard set being edited
   setId = '';
+  // Flag to track whether we're in edit mode or create mode
   isEditing = false;
 
   constructor(
@@ -43,11 +65,17 @@ export class FlashcardEditComponent implements OnInit {
     private flashcardService: FlashcardService
   ) {}
 
+  // Get the ID from the route parameters, if no ID is found, default to 'new'
   ngOnInit(): void {
     this.setId = this.route.snapshot.paramMap.get('id') ?? 'new';
+
+    // Determine if we're editing (setId !== 'new') or creating (setId === 'new')
     this.isEditing = this.setId !== 'new';
 
-    const currentSet = this.isEditing ? this.flashcardService.getSetById(this.setId) : null;
+    // If editing, get the existing flashcard set, otherwise set to null
+    const currentSet = this.isEditing
+      ? this.flashcardService.getSetById(this.setId)
+      : null;
 
     this.form = this.fb.group({
       name: [currentSet?.name || '', Validators.required],
@@ -58,7 +86,7 @@ export class FlashcardEditComponent implements OnInit {
             question: [card.question, Validators.required],
             answer: [card.answer, Validators.required]
           })
-        ) || [this.createCard()]
+        ) || Array.from({ length: 10 }, () => this.createCard())
       )
     });
   }
@@ -73,34 +101,52 @@ export class FlashcardEditComponent implements OnInit {
       answer: ['', Validators.required]
     });
   }
-
+  // Method to add a new card to the form
   addCard(): void {
     this.cards.push(this.createCard());
   }
 
+  // Method to remove a card at specified index
   removeCard(index: number): void {
     if (this.cards.length > 1) {
       this.cards.removeAt(index);
     }
   }
 
+  // Method to handle form submission
   onSubmit(): void {
-    if (this.form.valid) {
-      const updatedSet: FlashcardSet = {
-        id: this.setId === 'new' ? Date.now().toString() : this.setId,
-        ...this.form.value
-      };
 
-      if (this.isEditing) {
-        this.flashcardService.updateSet(updatedSet);
-      } else {
-        this.flashcardService.addSet(updatedSet);
-      }
-
-      this.router.navigate(['/list']).catch(err => console.error('Navigation error:', err));
+    // First validation check: Ensure minimum number of cards
+    if (this.cards.length < 10) {
+      alert('Each flashcard set must contain at least 10 cards.');
+      return;
     }
+
+    // Second validation check: Form validity
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();  // Triggers validation UI for all fields
+      alert('Please fill out all required fields correctly.');
+      return;
+    }
+
+    // Create updated flashcard set object
+    const updatedSet: FlashcardSet = {
+      // Generate new ID if creating new set, otherwise use existing ID
+      id: this.setId === 'new' ? Date.now().toString() : this.setId,
+      ...this.form.value
+    };
+
+
+    // Conditional operator to either update existing or add new set
+    this.isEditing
+      ? this.flashcardService.updateSet(updatedSet)
+      : this.flashcardService.addSet(updatedSet);
+
+    // Navigate back to list view with error handling
+    this.router.navigate(['/list']).catch(err => console.error('Navigation error:', err));
   }
 
+  // Method to navigate back to the flashcard list
   backToList(): void {
     this.router.navigate(['/list']).catch(err => console.error('Navigation error:', err));
   }

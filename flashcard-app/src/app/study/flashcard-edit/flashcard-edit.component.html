@@ -1,46 +1,78 @@
+<!-- Main form container using Reactive Forms -->
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <!-- Flashcard Set Name Field -->
   <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
     <input matInput formControlName="name" placeholder="e.g., Math Basics" />
-    <mat-error *ngIf="form.get('name')?.invalid">Name is required</mat-error>
+
+    <!-- Error message shown when name field is touched and invalid -->
+    <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required
+    </mat-error>
   </mat-form-field>
 
+  <!-- Flashcard Set Description Field -->
   <mat-form-field appearance="outline">
     <mat-label>Description</mat-label>
     <textarea matInput formControlName="description" placeholder="Short description of the set"></textarea>
-    <mat-error *ngIf="form.get('description')?.invalid">Description is required</mat-error>
+
+    <!-- Error message for invalid description -->
+    <mat-error *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      Description is required
+    </mat-error>
   </mat-form-field>
 
+  <!-- Dynamic Cards Array Section -->
   <div formArrayName="cards">
+    <!-- Loops through each card in the form array -->
     <div *ngFor="let card of cards.controls; let i = index" [formGroupName]="i" class="card-item">
+
+      <!-- Question Field for each card -->
       <mat-form-field appearance="outline">
         <mat-label>Question</mat-label>
         <input matInput formControlName="question" placeholder="Enter question" />
-        <mat-error *ngIf="card.get('question')?.invalid">Question is required</mat-error>
+        <mat-error *ngIf="card.get('question')?.touched && card.get('question')?.invalid">
+          Question is required
+        </mat-error>
       </mat-form-field>
 
+      <!-- Answer Field for each card -->
       <mat-form-field appearance="outline">
         <mat-label>Answer</mat-label>
         <input matInput formControlName="answer" placeholder="Enter answer" />
-        <mat-error *ngIf="card.get('answer')?.invalid">Answer is required</mat-error>
+
+        <!-- Error message for answer field - shown when touched and invalid -->
+        <mat-error *ngIf="card.get('answer')?.touched && card.get('answer')?.invalid">
+          Answer is required
+        </mat-error>
       </mat-form-field>
 
+      <!-- Delete button for individual flashcard -->
       <button mat-icon-button color="warn" (click)="removeCard(i)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   </div>
 
+
+
+
+  <!-- Action buttons section -->
   <div class="actions">
-    <button mat-raised-button color="primary" (click)="addCard()">
+    <!-- Add Card button - Creates a new flashcard form group -->
+    <button mat-raised-button color="primary" type="button" (click)="addCard()">
       <mat-icon>add</mat-icon> Add Card
     </button>
 
-    <button mat-raised-button color="accent" [disabled]="!form.valid" type="submit">
+    <!-- Save button - Submits the entire form -->
+    <!-- Disabled if form is invalid OR there are fewer than 10 cards -->
+    <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid || cards.length < 10">
       <mat-icon>save</mat-icon> Save
     </button>
 
-    <!-- ✅ NEW Back to List button -->
+
+    <!-- Navigation button to return to flashcard list -->
     <button mat-stroked-button color="warn" type="button" (click)="backToList()">
       <mat-icon>arrow_back</mat-icon> Back to List
     </button>
