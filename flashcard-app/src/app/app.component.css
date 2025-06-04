@@ -1,19 +1,22 @@
+/* Styles for the root component of the application */
 app-root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;          /* Uses flexbox for layout */
+  flex-direction: column; /* Arranges children vertically */
+  min-height: 100vh;      /* Takes up at least full viewport height */
 }
 
+/* Styles for the Material toolbar component */
 mat-toolbar {
-  background-color: var(--primary-color);
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  padding: 0 16px;
+  background-color: var(--primary-color); /* Uses a CSS variable for theme color */
+  color: white;                           /* Sets text color to white */
+  font-size: 20px;                        /* Sets font size for toolbar text */
+  font-weight: 500;                       /* Sets medium font weight */
+  padding: 0 16px;                        /* Adds horizontal padding */
 }
 
+/* Styles for the main content area */
 main {
-  flex: 1;
-  padding: 32px;
-  background-color: var(--background-color);
+  flex: 1;                                /* Takes up remaining vertical space */
+  padding: 32px;                          /* Adds padding around main content */
+  background-color: var(--background-color); /* Uses CSS variable for background */
 }

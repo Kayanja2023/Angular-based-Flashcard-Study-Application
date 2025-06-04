@@ -1,21 +1,34 @@
+<!-- Main container for the flashcard list view -->
 <div class="flashcard-list">
+  <!-- Page title -->
   <h2>My Flashcard Sets</h2>
 
+  <!-- Create New Set button with routing -->
   <button mat-raised-button color="primary" [routerLink]="['/edit', 'new']" class="save-btn">
     <mat-icon>add</mat-icon>&nbsp;Create New Set
   </button>
 
+  <!-- Flashcard set list using async pipe to handle Observable -->
   <mat-card *ngFor="let set of flashcardSets$ | async" class="flashcard-card">
+    <!-- Set name display -->
     <mat-card-title>{{ set.name }}</mat-card-title>
+
+    <!-- Set description display -->
     <mat-card-content>{{ set.description }}</mat-card-content>
+
+    <!-- Action buttons for each flashcard set -->
     <mat-card-actions>
+      <!-- Edit button -->
       <button mat-stroked-button color="primary" [routerLink]="['/edit', set.id]">
         <mat-icon>edit</mat-icon>&nbsp;Edit
       </button>
+
+      <!-- Delete button with confirmation -->
       <button mat-raised-button color="warn" (click)="confirmDelete(set.id)">
         <mat-icon>delete</mat-icon>&nbsp;Delete
       </button>
 
+      <!-- Study button -->
       <button mat-flat-button color="accent" [routerLink]="['/study', set.id]">
         <mat-icon>school</mat-icon>&nbsp;Study
       </button>
