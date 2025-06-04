@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FlashcardSetComponent } from './flashcard-set.component';
 
 describe('FlashcardSetComponent', () => {
@@ -8,16 +7,17 @@ describe('FlashcardSetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlashcardSetComponent]
-    })
-    .compileComponents();
+      declarations: [FlashcardSetComponent]
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(FlashcardSetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 });
